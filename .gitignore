@@ -1,0 +1,21 @@
+# Archivos intermedios de compilación y revisión visual
+/build/
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+*.run.xml
+*.snm
+*.synctex.gz
+*.toc
+
+# Cachés y archivos del sistema
+__pycache__/
+*.py[cod]
+.DS_Store
+Thumbs.db

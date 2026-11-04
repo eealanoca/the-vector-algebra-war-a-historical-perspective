@@ -1,0 +1,1415 @@
+% Presentación basada en WARaLG.pdf (arXiv:1509.00501v2).
+% Tema EastLansing nativo: rounded + infolines + spruce.
+% Compilar: latexmk -pdf -outdir=build presentacion.tex
+\documentclass[11pt,aspectratio=169]{beamer}
+\usetheme{EastLansing}
+\usefonttheme{professionalfonts}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs,tabularx,colortbl}
+\usepackage{tikz,appendixnumberbeamer}
+\usetikzlibrary{arrows.meta,calc,positioning}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+% Alias exclusivos de los diagramas; no redefinen la paleta del tema.
+\colorlet{forest}{MSUgreen}
+\colorlet{accent}{MSUgreen!65!black}
+\colorlet{ink}{black}
+\setbeameroption{hide notes}
+\setbeamertemplate{navigation symbols}{}
+% Tamaños para ecuaciones y títulos largos; se conservan las plantillas nativas.
+\setbeamerfont{title}{size=\Large,series=\bfseries}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{block title}{size=\normalsize}
+\setbeamersize{text margin left=9mm,text margin right=9mm}
+\setlength{\emergencystretch}{1em}
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+\newcommand{\Cl}{\mathrm{Cl}}
+\newcommand{\qi}{\boldsymbol{\mathrm i}}
+\newcommand{\qj}{\boldsymbol{\mathrm j}}
+\newcommand{\qk}{\boldsymbol{\mathrm k}}
+\newcommand{\fuente}[1]{\par\vfill\vspace{1mm}{\fontsize{6.2}{7.2}\selectfont\color{black!60}#1\par}}
+\title[The vector algebra war]{The vector algebra war:\\a historical perspective}
+\subtitle{La guerra del álgebra vectorial: una perspectiva histórica}
+\author[Ing. E. E. Alanoca Condori]{Ing. Elmer Efrain Alanoca Condori}
+\institute[UMSA]{Maestría en Ciencias de la Ingeniería\\Mecánica y Electromecánica}
+\date[Mecatrónica II]{\textbf{Mecatrónica II}}
+\hypersetup{pdftitle={The vector algebra war: a historical perspective},
+pdfauthor={Ing. Elmer Efrain Alanoca Condori},
+pdfsubject={Mecatrónica II - Análisis del artículo de Chappell y colaboradores},
+pdfkeywords={EastLansing, Clifford, Gibbs, Hamilton, álgebra geométrica}}
+\begin{document}
+\section{Problema histórico y criterios}
+% Diapositiva 1
+\begin{frame}
+\titlepage
+\vspace{-4mm}
+\begin{center}
+\scriptsize J. M. Chappell, A. Iqbal, J. G. Hartnett y D. Abbott (2016).\\
+\scriptsize arXiv:1509.00501v2\quad\textbar\quad DOI: 10.1109/ACCESS.2016.2538262
+\end{center}
+\note{Identificar el título original y su traducción. La preparación corresponde a Ing. Elmer Efrain Alanoca Condori, para Mecatrónica II, dentro de la Maestría en Ciencias de la Ingeniería Mecánica y Electromecánica. Distinguir estos datos de la autoría del artículo de Chappell, Iqbal, Hartnett y Abbott. La portada utiliza la plantilla de título nativa de EastLansing.}
+\end{frame}
+
+% Diapositiva 2
+\begin{frame}{Tesis y contribución del artículo}
+\begin{block}{Tesis de Chappell y colaboradores}
+El álgebra geométrica $\Cl_{3,0}(\mathbb R)$ integra los vectores euclídeos y el álgebra de las rotaciones mediante una única estructura asociativa.
+\end{block}
+\vspace{2mm}
+\begin{enumerate}
+\item \textbf{Diagnóstico histórico:} superposición entre direcciones espaciales y generadores de rotación.
+\item \textbf{Resultado estructural:} producto geométrico, graduación y subálgebras pares.
+\item \textbf{Alcance físico:} reformulación de campos, relatividad y vectores ligados.
+\end{enumerate}
+\fuente{[C16], resumen, secc. I y V, pp. 1 y 6--7.}
+\note{La contribución central es una síntesis histórica con una propuesta de lenguaje matemático. Las identidades y correspondencias algebraicas pueden verificarse directamente; la preferencia por un lenguaje universal es una posición metodológica de los autores. La presentación conservará esta distinción para evitar convertir una tesis interpretativa en un resultado experimental.}
+\end{frame}
+
+% Diapositiva 3
+\begin{frame}{Estructura del argumento}
+\begin{columns}[T,onlytextwidth]
+\column{.48\textwidth}
+\tableofcontents[sections={1-3},hideallsubsections]
+\column{.48\textwidth}
+\tableofcontents[sections={4-6},hideallsubsections]
+\end{columns}
+\vspace{4mm}
+\begin{block}{Pregunta rectora}
+¿Qué información geométrica conserva cada formalismo y qué operaciones permite realizar sin ampliar su estructura?
+\end{block}
+\fuente{Organización analítica de [C16], secc. I--V.}
+\note{La progresión va de los criterios de comparación a la construcción matemática y termina en sus aplicaciones y límites. Los cálculos de componentes, ejemplos elementales y demostraciones complementarias están agrupados en apéndices. El cuerpo principal prioriza hipótesis, relaciones estructurales e interpretación.}
+\end{frame}
+
+% Diapositiva 4
+\begin{frame}{Criterios para comparar sistemas vectoriales}
+\small
+\renewcommand{\arraystretch}{1.45}
+\begin{tabularx}{\textwidth}{@{}l Y@{}}
+\toprule
+\textbf{Criterio} & \textbf{Pregunta matemática}\\
+\midrule
+Representación & ¿Distingue magnitudes, direcciones, áreas y volúmenes?\\
+Producto & ¿Existe una multiplicación asociativa compatible con la métrica?\\
+Transformaciones & ¿Representa la acción de rotaciones y cambios de marco?\\
+Invertibilidad & ¿Qué elementos admiten inversa y bajo qué hipótesis?\\
+Generalización & ¿La construcción se conserva al cambiar la dimensión?\\
+\bottomrule
+\end{tabularx}
+\par\smallskip\small
+\textbf{Criterio de lectura:} economía de notación, contenido matemático y rendimiento computacional son propiedades diferentes.
+\fuente{Criterios elaborados a partir de [C16], secc. I, IV y V.}
+\note{Explicitar estos criterios permite comparar sin adoptar de entrada un ganador. Una notación más compacta no demuestra que un método sea numéricamente más rápido o pedagógicamente superior. El artículo argumenta sobre estructura y unificación, pero no presenta una comparación controlada de costos computacionales ni resultados de aprendizaje.}
+\end{frame}
+
+% Diapositiva 5
+\begin{frame}{Genealogía de la controversia vectorial}
+\centering
+\begin{tikzpicture}[>=Latex,node distance=4mm and 8mm,
+box/.style={draw=forest!35,fill=forest!3,rounded corners=1pt,text width=31mm,align=center,minimum height=12mm,font=\footnotesize},
+arr/.style={->,draw=forest!65,line width=.7pt}]
+\node[box](d){Descartes\quad 1637\\Geometría analítica};
+\node[box,right=of d](g){Grassmann\quad 1844\\Álgebra de extensión};
+\node[box,right=of g,fill=forest!10](c){Clifford\quad 1878\\Producto geométrico};
+\node[box,below=8mm of d](z){Wessel, Argand, Gauss\\Álgebra compleja};
+\node[box,right=of z](h){Hamilton\quad 1843\\Cuaterniones};
+\node[box,right=of h](v){Gibbs y Heaviside\\Análisis vectorial};
+\draw[arr](d)--(g);\draw[arr](g)--(c);
+\draw[arr](d)--(z);\draw[arr](z)--(h);\draw[arr](h)--(v);
+\draw[arr](h)--(c);
+\end{tikzpicture}
+\par\vspace{4mm}\raggedright
+Desde 1890, la controversia contrapone la unidad del producto cuaterniónico y la eficacia de separar los productos escalar y vectorial.
+\fuente{Adaptación selectiva de [C16], secc. II y fig. 1, pp. 1--3 y 6.}
+\note{El esquema sintetiza relaciones intelectuales; las flechas no constituyen una cadena cronológica exclusiva. Clifford precede al debate más intenso y su obra combina el producto métrico con el álgebra de extensión de Grassmann. Heaviside y Tait fueron actores decisivos en el desarrollo y difusión de las alternativas. Hestenes aparece posteriormente en la recuperación y ampliación del programa geométrico. Se omite una flecha Gibbs hacia Clifford para evitar una lectura cronológica anacrónica; la integración posterior de formalismos no implica esa influencia histórica.}
+\end{frame}
+
+% Diapositiva 6
+\begin{frame}{Hamilton y Gibbs: operaciones e interpretación}
+\begin{columns}[T,onlytextwidth]
+\column{.48\textwidth}
+\begin{block}{Cuaterniones de Hamilton}
+\[
+q=q_0+q_1\qi+q_2\qj+q_3\qk.
+\]
+\[
+\qi^2=\qj^2=\qk^2=-1.
+\]
+\[
+\widehat{\vect v}\widehat{\vect w}
+=-\vect v\cdot\vect w+\widehat{\vect v\times\vect w}.
+\]
+Producto único; estructura de división.
+\end{block}
+\column{.48\textwidth}
+\begin{block}{Sistema de Gibbs}
+\[
+\vect v,\vect w\in\mathbb R^3,
+\quad \vect v\cdot\vect w\in\mathbb R.
+\]
+\[
+\vect v\times\vect w\in\mathbb R^3_{\mathrm{axial}}.
+\]
+Dos productos; lectura física directa.
+\end{block}
+\end{columns}
+\vspace{2mm}
+\textbf{Punto de tensión:} un cuaternión puro satisface $\widehat{\vect v}^{\,2}=-\|\vect v\|^2$, mientras que un vector euclídeo se asociará a un cuadrado positivo.
+\fuente{[C16], secc. II, ecs. (2)--(4), p. 2.}
+\note{El signo no indica que el formalismo de Hamilton produzca energías físicas negativas: la energía se construye con la norma adecuada. Expresa que los generadores cuaterniónicos se identifican naturalmente con bivectores. La virtud de Gibbs fue operacional e histórica; la objeción de Clifford se refiere al alcance del sistema elemental, no a la validez de los resultados del análisis vectorial.}
+\end{frame}
+
+% Diapositiva 7
+\begin{frame}{Del debate vectorial a las teorías del siglo XX}
+\small
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{\textwidth}{@{}l l Y@{}}
+\toprule
+\textbf{Hito} & \textbf{Formalismo} & \textbf{Lectura del artículo}\\
+\midrule
+1908 & Minkowski & Cuadrivectores para integrar espacio y tiempo.\\
+1927 & Pauli & Espinores complejos y nuevas leyes de transformación.\\
+1928 & Dirac & Cuatro componentes complejas: ocho componentes reales.\\
+1945 & Dirac & Discusión del papel de los cuaterniones y de su complejificación.\\
+\bottomrule
+\end{tabularx}
+\par\medskip
+\begin{block}{Consecuencia del recorrido histórico}
+Los autores distinguen el álgebra rotacional de Hamilton de un sistema que represente simultáneamente direcciones, campos y estructura espacio-temporal.
+\end{block}
+\fuente{[C16], secc. II, pp. 2--3; hitos según el relato del manuscrito.}
+\note{El artículo presenta estos hitos para explicar por qué los lenguajes de la física continuaron diversificándose tras la adopción del sistema de Gibbs. La insuficiencia señalada corresponde al uso de cuaterniones reales sin ampliaciones para determinadas representaciones; no equivale a una imposibilidad absoluta de formular relatividad mediante construcciones cuaterniónicas ampliadas. La relación entre espinores, matrices y cuaterniones exige especificar el espacio y la acción utilizados. Las fechas son las que utiliza la discusión histórica del artículo.}
+\end{frame}
+
+% Diapositiva 8
+\begin{frame}{Direcciones y planos: la coincidencia dimensional en 3D}
+\[
+\dim V=n,\qquad \dim\Lambda^2V=\frac{n(n-1)}2.
+\]
+\begin{center}
+\renewcommand{\arraystretch}{1.16}
+\begin{tabular}{@{}cccc@{}}
+\toprule
+$n$ & Vectores & Bivectores & Generadores de $SO(n)$\\
+\midrule
+2&2&1&1\\
+\rowcolor{forest!8}3&3&3&3\\
+4&4&6&6\\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{block}{Distinción estructural}
+La dualidad identifica componentes; los vectores polares y los planos orientados conservan tipos geométricos distintos.
+\end{block}
+\fuente{[C16], secc. V, p. 6; formulación dimensional desarrollada.}
+\note{El conteo de generadores de SO(n) coincide con el de matrices antisimétricas y con los componentes bivectoriales. En tres dimensiones la dualidad depende de la métrica y de una orientación. Es una identificación útil, no una equivalencia de las leyes de transformación bajo todas las simetrías espaciales.}
+\end{frame}
+
+\section{Estructura de Clifford}
+% Diapositiva 9
+\begin{frame}{Álgebra euclídea: hipótesis y relaciones generadoras}
+Sea $V=\mathbb R^3$ con producto interno euclídeo y base ortonormal $\{e_1,e_2,e_3\}$.
+\begin{block}{Definición de $\Cl_3\equiv\Cl_{3,0}(\mathbb R)$}
+\[
+e_i e_j+e_j e_i=2\delta_{ij},\qquad
+\vect v^{\,2}=\vect v\cdot\vect v.
+\]
+\end{block}
+\begin{itemize}
+\item El producto es bilineal, asociativo y tiene identidad.
+\item $e_i^2=1$ y $e_i e_j=-e_j e_i$ para $i\ne j$.
+\item La multiplicación sale del subespacio vectorial y permanece en el álgebra.
+\end{itemize}
+\vspace{1mm}
+\textbf{Convención:} $I=e_1e_2e_3$ sustituye al símbolo $j$ empleado por el artículo.
+\fuente{[C16], secc. III, p. 3, construcción de la ec. (5).}
+\note{La signatura positiva forma parte de las hipótesis y evita confundir Cl(3,0) con el álgebra espacio-temporal Cl(1,3). El álgebra se genera imponiendo las relaciones cuadráticas y extendiendo por bilinealidad y asociatividad. El subespacio de grado uno no es cerrado para el producto geométrico; precisamente se amplía para conservar la información de grados cero y dos.}
+\end{frame}
+
+% Diapositiva 10
+\begin{frame}{Graduación: escalares, vectores, áreas y volúmenes}
+\begin{center}
+\begin{tikzpicture}[>=Latex,scale=.9]
+\foreach \x/\label/\formula in {0/{Escalar}/{$1$},3.3/{Vector}/{$e_i$},6.6/{Bivector}/{$e_{ij}$},9.9/{Trivector}/{$I$}}{
+\node[font=\bfseries,text=MSUgreen] at (\x,2.4){\label};
+\node at (\x,-.35){\formula};}
+\fill[MSUgreen] (0,1) circle(4pt);
+\draw[->,very thick,MSUgreen](2.5,.45)--(4,1.65);
+\filldraw[fill=MSUgreen!20,draw=MSUgreen,thick](5.6,.45)--(7,.45)--(7.6,1.65)--(6.2,1.65)--cycle;
+\draw[->,MSUgreen,thick](6.05,.7)--(6.8,.7)--(7.1,1.25);
+\filldraw[fill=MSUgreen!12,draw=MSUgreen](9.1,.45) rectangle (10.4,1.6);
+\filldraw[fill=MSUgreen!30,draw=MSUgreen](9.1,1.6)--(9.6,2)--(10.9,2)--(10.4,1.6)--cycle;
+\filldraw[fill=MSUgreen!20,draw=MSUgreen](10.4,.45)--(10.9,.85)--(10.9,2)--(10.4,1.6)--cycle;
+\node at (0,-1){grado 0: $1$};
+\node at (3.3,-1){grado 1: $3$};
+\node at (6.6,-1){grado 2: $3$};
+\node at (9.9,-1){grado 3: $1$};
+\end{tikzpicture}
+\end{center}
+\[
+\dim\Cl_3=1+3+3+1=2^3=8.
+\]
+\small La graduación distingue el tipo geométrico; la dimensión del espacio físico continúa siendo tres.
+\fuente{[C16], sección III, pp. 3--4, ec. (10); esquema propio.}
+\note{Un bivector representa un plano orientado con magnitud de área, no una flecha dentro del plano. Un trivector representa volumen orientado. Los dibujos son ayudas geométricas; un escalar no constituye por sí mismo la posición de un punto. Los ocho componentes son grados de libertad algebraicos sobre un espacio físico de tres dimensiones.}
+\end{frame}
+
+% Diapositiva 11
+\begin{frame}{Multivectores y dualidad en $\Cl_3$}
+\[
+\Cl_3=\Lambda^0V\oplus\Lambda^1V\oplus\Lambda^2V\oplus\Lambda^3V,
+\qquad \dim\Cl_3=8.
+\]
+\begin{block}{Descomposición por grados}
+\[
+M=a+\vect v+I\vect w+Ib,
+\quad a,b\in\mathbb R,\quad\vect v,\vect w\in V.
+\]
+\end{block}
+\[
+I^2=-1,\qquad IM=MI,\qquad
+Ie_1=e_{23},\quad Ie_2=e_{31},\quad Ie_3=e_{12}.
+\]
+\small $\langle M\rangle_k$ selecciona el grado $k$; $I\vect w$ es un bivector y $\vect w$ su dual axial. El producto conserva la paridad y puede mezclar grados.
+\fuente{[C16], secc. III, ecs. (10)--(12), p. 3.}
+\note{I es central en Cl(3,0) y permite una estructura compleja interna con coeficientes reales. No extrapolar su centralidad o el signo de su cuadrado a cualquier dimensión y signatura. Distinguir el bivector Iw de su vector axial dual w; esta distinción tendrá consecuencias en paridad y en la representación de los campos. La suma de espacios exteriores expresa una descomposición como espacio vectorial. El producto de Clifford respeta una graduación por paridad y mezcla grados enteros; no se está identificando la multiplicación de Clifford con la exterior.}
+\end{frame}
+
+% Diapositiva 12
+\begin{frame}{Proposición 1. Descomposición del producto geométrico}
+Para $\vect a,\vect b\in V$:
+\begin{equation}
+\boxed{\vect a\vect b=\vect a\cdot\vect b+\vect a\wedge\vect b.}
+\label{eq:producto}
+\end{equation}
+\begin{align*}
+\vect a\cdot\vect b&=\tfrac12(\vect a\vect b+\vect b\vect a)\in\Lambda^0V,\\
+\vect a\wedge\vect b&=\tfrac12(\vect a\vect b-\vect b\vect a)\in\Lambda^2V.
+\end{align*}
+\begin{block}{Justificación}
+La relación $\vect a\vect b+\vect b\vect a=2\vect a\cdot\vect b$ fija la parte simétrica. La parte restante es bilineal y alternante.
+\end{block}
+\small En 3D orientado: $\vect a\wedge\vect b=I(\vect a\times\vect b)$.
+\fuente{[C16], ecs. (6)--(7) y (27), pp. 3 y 6; justificación explicitada.}
+\note{La identidad se obtiene polarizando el cuadrado métrico. Al expandir (a+b) al cuadrado y restar a al cuadrado y b al cuadrado se recupera la relación simétrica. El término alternante es el producto exterior. Así, Clifford integra la métrica euclídea y la estructura de Grassmann; no se limita a sumar dos reglas sin relación.}
+\end{frame}
+
+% Diapositiva 13
+\begin{frame}{Contenido geométrico: área y volumen orientados}
+\begin{columns}[c,onlytextwidth]
+\column{.46\textwidth}
+\centering
+\begin{tikzpicture}[scale=.85,>=Latex]
+\fill[MSUgreen!15](0,0)--(3,0)--(4,2)--(1,2)--cycle;
+\draw[dashed,gray](3,0)--(4,2)--(1,2);
+\draw[->,very thick,MSUgreen](0,0)--(3,0) node[midway,below]{$\vect a$};
+\draw[->,very thick,accent](0,0)--(1,2) node[midway,left]{$\vect b$};
+\node at (2,1){$\vect a\wedge\vect b$};
+\draw[->,gray](.8,0) arc[start angle=0,end angle=63,radius=.8];
+\node at (1.05,.45){$\theta$};
+\end{tikzpicture}
+\column{.50\textwidth}
+\[
+\|\vect a\wedge\vect b\|=\|\vect a\|\|\vect b\|\sin\theta.
+\]
+\[
+\vect a\wedge\vect b\wedge\vect c
+=I\,\vect a\cdot(\vect b\times\vect c).
+\]
+\begin{block}{Volumen orientado}
+El coeficiente de $I$ es el determinante; su valor absoluto es el volumen.
+\end{block}
+\end{columns}
+\fuente{[C16], sección IV, pp. 5--6; dibujo y explicitación propios.}
+\note{El área está en el plano generado por los vectores. La normal del producto cruz es su representación dual en tres dimensiones. En el volumen, corregir la errata del texto donde se repite b en el triple producto: debe ser a punto b cruz c. No hace falta añadir una regla independiente de volumen: se usa el grado tres del producto.}
+\end{frame}
+
+% Diapositiva 14
+\begin{frame}{Criterios de ortogonalidad y dependencia lineal}
+\renewcommand{\arraystretch}{1.45}
+\begin{tabularx}{\textwidth}{@{}l X@{}}
+\toprule
+\textbf{Condición} & \textbf{Interpretación}\\
+\midrule
+$\langle\vect a\vect b\rangle_0=0$ & Vectores ortogonales.\\
+$\langle\vect a\vect b\rangle_2=0$ & Dependencia lineal: vectores paralelos si ambos son no nulos.\\
+$\langle\vect a\vect b\vect c\rangle_3=0$ & Tres vectores linealmente dependientes: pertenecen a un subespacio de dimensión a lo sumo dos.\\
+\bottomrule
+\end{tabularx}
+\medskip
+\begin{block}{Proyecciones homogéneas}
+Las partes de grados cero, dos y tres caracterizan relaciones métricas y de dependencia lineal.
+\end{block}
+\fuente{[C16], sección IV, p. 6, discusión de la ec. (27).}
+\note{Incluir los casos degenerados evita afirmar que existe un plano único cuando los vectores son colineales o nulos. Para vectores no nulos, la ausencia de parte bivectorial indica paralelismo. Para tres vectores, el volumen cero caracteriza dependencia lineal, y por tanto coplanaridad en el sentido de estar contenidos en un plano por el origen.}
+\end{frame}
+
+% Diapositiva 15
+\begin{frame}{Proposición 2. Invertibilidad y divisores de cero}
+Si $\vect v\in V\setminus\{0\}$, entonces
+\[
+\vect v^{-1}=\frac{\vect v}{\|\vect v\|^2}.
+\]
+Para $M=a+\vect v+I\vect w+Ib$, definir
+\[
+\overline M=a-\vect v-I\vect w+Ib,\qquad D=M\overline M\in\operatorname{span}\{1,I\}.
+\]
+\begin{equation}
+M\text{ invertible }\Longleftrightarrow D\ne0,
+\qquad M^{-1}=\overline M D^{-1}.
+\label{eq:inverse}
+\end{equation}
+\begin{alertblock}{Límite algebraico}
+$(1+e_1)(1-e_1)=0$: $\Cl_3$ contiene divisores de cero y no es un álgebra de división.
+\end{alertblock}
+\fuente{[C16], ecs. (8) y (12), p. 3; condición de existencia explicitada.}
+\note{La inversa de cualquier vector euclídeo no nulo existe por positividad de su cuadrado. Para un multivector general, la conjugación produce un denominador central que puede anularse. D distinto de cero es condición necesaria y suficiente: si M fuera invertible y D fuera cero, su conjugado sería cero, lo que obliga a M a ser cero. La estructura matricial mostrada más adelante hace visible la misma condición como no singularidad.}
+\end{frame}
+
+% Diapositiva 16
+\begin{frame}{Subálgebras pares y recuperación de los formalismos}
+\small
+\renewcommand{\arraystretch}{1.55}
+\begin{tabularx}{\textwidth}{@{}l Y Y@{}}
+\toprule
+& \textbf{Plano euclídeo} & \textbf{Espacio tridimensional}\\
+\midrule
+Álgebra total & $\Cl_2$, dimensión $4$ & $\Cl_3$, dimensión $8$\\
+Grado uno & $v_1e_1+v_2e_2$ & $v_1e_1+v_2e_2+v_3e_3$\\
+Subálgebra par & $a+b e_{12}\simeq\mathbb C$ & $a+I\vect w\simeq\mathbb H$\\
+Generador & $e_{12}^{2}=-1$ & $e_{23}^{2}=e_{31}^{2}=e_{12}^{2}=-1$\\
+\bottomrule
+\end{tabularx}
+\vspace{3mm}
+\begin{block}{Síntesis estructural}
+El subespacio vectorial y el álgebra de operadores se integran sin identificarse: las subálgebras pares son cerradas; el grado uno no lo es.
+\end{block}
+\fuente{[C16], secc. III, pp. 3--4 y tabla I, p. 6.}
+\note{Los complejos y cuaterniones se recuperan como estructuras algebraicas, no solo por tener igual cantidad de componentes. El producto de dos elementos pares es par. La identificación cuaterniónica exige escoger una convención de signos que respete ij igual a k. La comparación evita denominar subálgebra al conjunto de vectores cartesianos.}
+\end{frame}
+
+% Diapositiva 17
+\begin{frame}{El plano de Clifford y la representación compleja}
+\[
+M_2=a+v_1e_1+v_2e_2+bJ_2,\quad J_2=e_1e_2,\quad J_2^2=-1.
+\]
+\begin{columns}[T,onlytextwidth]
+\column{.48\textwidth}
+\begin{block}{Vector del plano}
+\[
+\vect v=v_1e_1+v_2e_2=e_1z,
+\quad z=v_1+J_2v_2.
+\]
+\end{block}
+\column{.48\textwidth}
+\begin{block}{Operador de rotación}
+\[
+\vect v'=e^{-J_2\theta}\vect v.
+\]
+\[
+z'=e^{J_2\theta}z.
+\]
+\end{block}
+\end{columns}
+\medskip
+\small Ambas fórmulas representan el mismo giro: $e^{-J_2\theta}e_1=e_1e^{J_2\theta}$. El vector tiene grado uno; el operador es par.
+\fuente{[C16], ecs. (13)--(14), pp. 3--4, y conexión con ec. (1).}
+\note{Esta diapositiva explicita la parte del artículo dedicada al plano. Se usa J2 para el bivector bidimensional y se reserva I para el trivector tridimensional. En Cl2 el bivector J2 anticonmuta con los vectores del plano, a diferencia del seudoescalar central de Cl3. De esa anticonmutación surge el cambio de signo entre las fórmulas unilateral vectorial y compleja. La ecuación v=e1 z establece la correspondencia; no se afirma que vector y operador sean el mismo tipo geométrico.}
+\end{frame}
+
+% Diapositiva 18
+\begin{frame}{Representación matricial: el álgebra de Pauli}
+\small
+Isomorfismo de álgebras reales: $\Cl_3\simeq\operatorname{Mat}_2(\mathbb C)$.
+La representación identifica $e_i$ con las matrices de Pauli:
+\[
+\sigma_1=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+\sigma_2=\begin{pmatrix}0&-\mathrm i\\\mathrm i&0\end{pmatrix},\quad
+\sigma_3=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+\]
+\[
+\sigma_i\sigma_j+\sigma_j\sigma_i=2\delta_{ij}\mathbf1_2,
+\qquad I\longleftrightarrow\sigma_1\sigma_2\sigma_3=\mathrm i\mathbf1_2.
+\]
+\begin{block}{Correspondencia algebraica}
+La representación conserva sumas, productos e identidad; $\Cl_3\simeq\operatorname{Mat}_2(\mathbb C)$ tiene dimensión real ocho.
+\end{block}
+\small Las matrices que actúan y los espinores sobre los que actúan siguen siendo objetos distintos.
+\fuente{[C16], inicio de la sección III, p. 3; matrices explicitadas para la presentación.}
+\note{Las matrices de Pauli verifican las mismas relaciones de producto que los generadores euclídeos. Esta representación permite comprobar el isomorfismo del álgebra real de ocho dimensiones con las matrices complejas dos por dos. La matriz no es el espinor: en la formulación de Pauli, el espinor es un objeto complejo de dos componentes sobre el que actúan matrices. Que el álgebra par sea isomorfa a los cuaterniones no elimina la necesidad de declarar las leyes de transformación de un estado físico.}
+\end{frame}
+
+\section{Transformaciones y cálculo}
+% Diapositiva 19
+\begin{frame}{Rotores y grupo Spin(3)}
+Sea $B=I\vect n$ un bivector unitario, con $\|\vect n\|=1$ y $B^2=-1$.
+\[
+R(\theta)=e^{-B\theta/2}=\cos\frac\theta2-B\sin\frac\theta2,
+\qquad R\widetilde R=1.
+\]
+\begin{equation}
+\mathcal R_R(\vect v)=R\vect v\widetilde R.
+\label{eq:rotor}
+\end{equation}
+\[
+\operatorname{Spin}(3)\simeq SU(2)\longrightarrow SO(3),
+\qquad \ker\mathcal R=\{+1,-1\}.
+\]
+\begin{block}{Interpretación}
+El bivector define el plano de rotación; los rotores unitarios realizan una doble cubierta de las rotaciones espaciales.
+\end{block}
+\fuente{[C16], ecs. (3) y (9), pp. 2--3; estructura de grupo explicitada.}
+\note{En Cl3 los rotores son los elementos pares unitarios y se identifican con los cuaterniones unitarios. R y menos R tienen la misma acción por conjugación. El semíangulo refleja la doble cubierta, no una corrección arbitraria. Con la base de Pauli, los generadores bivectoriales corresponden a matrices antihermíticas sin traza y los rotores a SU(2).}
+\end{frame}
+
+% Diapositiva 20
+\begin{frame}{Acción adjunta, isometría y composición}
+\begin{align*}
+(R\vect v\widetilde R)^2&=R\vect v^{\,2}\widetilde R=\|\vect v\|^2,\\
+\mathcal R_{R_2}\circ\mathcal R_{R_1}&=\mathcal R_{R_2R_1}.
+\end{align*}
+\begin{block}{Consecuencias}
+\begin{itemize}
+\item Se preservan norma y producto interno.
+\item La composición conserva el orden y reproduce la no conmutatividad de las rotaciones 3D.
+\end{itemize}
+\end{block}
+\[
+\vect v'=\vect v\cos\theta+(\vect n\times\vect v)\sin\theta
++\vect n(\vect n\cdot\vect v)(1-\cos\theta).
+\]
+\fuente{Desarrollo de [C16], ec. (9), p. 3.}
+\note{La norma se conserva por la asociatividad y porque el cuadrado vectorial es escalar. La conservación del producto interno se obtiene por polarización de la norma. Para componer, aplicar primero R1 y luego R2 e invertir el orden de los factores en el reverso. Rodrigues se obtiene descomponiendo el vector en componentes paralela y perpendicular al eje; la derivación está en el apéndice.}
+\end{frame}
+
+% Diapositiva 21
+\begin{frame}{Paridad e involuciones: operaciones diferentes}
+\small
+\renewcommand{\arraystretch}{1.45}
+\begin{tabularx}{\textwidth}{@{}l c c c c Y@{}}
+\toprule
+\textbf{Operación} & $0$ & $1$ & $2$ & $3$ & \textbf{Uso}\\
+\midrule
+Reversión $\widetilde M$ & $+$&$+$&$-$&$-$ & Inversa de rotores unitarios.\\
+Grado $M^\star$ & $+$&$-$&$+$&$-$ & Inversión espacial inducida.\\
+Conjugación $\overline M$ & $+$&$-$&$-$&$+$ & Inversión de multivectores.\\
+\bottomrule
+\end{tabularx}
+\vspace{3mm}
+\[
+\vect v\mapsto-\vect v,\qquad
+\vect a\wedge\vect b\mapsto(-\vect a)\wedge(-\vect b)=\vect a\wedge\vect b.
+\]
+\textbf{Resultado:} el vector polar cambia de signo; el bivector permanece invariante bajo inversión espacial total.
+\fuente{[C16], ecs. (12), (21) y discusión polar--axial, pp. 3 y 5.}
+\note{La reversión, la involución de grado y la conjugación no son intercambiables. La extensión de menos identidad sobre el espacio vectorial a todo el álgebra coincide con la involución de grado. Al expresar un bivector como Iw, la representación axial depende de la orientación escogida. En electrodinámica esto permite distinguir E de la parte magnética IcB sin confiar solo en una letra vectorial.}
+\end{frame}
+
+% Diapositiva 22
+\begin{frame}{Derivación geométrica y unificación del cálculo}
+\[
+\nabla=\sum_{i=1}^3e_i\partial_i,\qquad
+\nabla\vect a=\nabla\cdot\vect a+\nabla\wedge\vect a
+=\nabla\cdot\vect a+I\nabla\times\vect a.
+\]
+\begin{align*}
+\frac{\mathrm d}{\mathrm dt}(AB)&=\dot A B+A\dot B,\\
+\nabla^2&=\partial_x^2+\partial_y^2+\partial_z^2.
+\end{align*}
+\begin{block}{Hipótesis y lectura}
+Base cartesiana fija y campos suficientemente regulares. La divergencia y el rotacional se recuperan por selección de grado; las derivadas mixtas conmutan.
+\end{block}
+\small La unificación integral de Gauss y Stokes requiere el marco completo del cálculo geométrico.
+\fuente{[C16], ecs. (22)--(24), p. 5; cuadrado del operador desarrollado.}
+\note{En la regla temporal se conserva el orden de los factores aunque el producto no conmute. Para nabla al cuadrado, los términos cruzados se cancelan por anticonmutación y por igualdad de derivadas mixtas bajo la regularidad supuesta. El artículo remite al cálculo geométrico para la unificación de teoremas integrales; esa afirmación no sustituye la formulación de sus hipótesis y condiciones de frontera.}
+\end{frame}
+
+\section{Reformulaciones físicas}
+% Diapositiva 23
+\begin{frame}{Paravectores y forma cuadrática de Minkowski}
+\[
+S=ct+\vect x\in\Lambda^0V\oplus\Lambda^1V,
+\qquad \overline S=ct-\vect x.
+\]
+\begin{equation}
+S\overline S=c^2t^2-\|\vect x\|^2.
+\label{eq:interval}
+\end{equation}
+\begin{itemize}
+\item La forma de Minkowski surge del producto por el conjugado.
+\item $S^2$ y $S\overline S$ son expresiones diferentes.
+\item El modelo de paravectores usa $\Cl_{3,0}$; el álgebra espacio-temporal $\Cl_{1,3}$ es una construcción distinta.
+\end{itemize}
+\begin{block}{Coherencia dimensional}
+$ct$ y $\vect x$ tienen unidades de longitud. El artículo escribe la versión con la escala temporal normalizada.
+\end{block}
+\fuente{[C16], ecs. (15)--(16), p. 4; factores dimensionales explicitados.}
+\note{La identidad de Minkowski no requiere cambiar el cuadrado positivo de los generadores espaciales: el signo temporal-espacial surge al multiplicar por la conjugación. El álgebra de espacio físico y el álgebra espacio-temporal pueden relacionarse, pero no se deben identificar como si tuvieran la misma dimensión real o los mismos generadores.}
+\end{frame}
+
+% Diapositiva 24
+\begin{frame}{Boosts de Lorentz y parametrización por rapidez}
+Sea $\vect n^2=1$, $\beta=u/c=\tanh\varphi$ y $\gamma=\cosh\varphi$.
+\[
+L=e^{\varphi\vect n/2}
+=\cosh\frac\varphi2+\vect n\sinh\frac\varphi2.
+\]
+\[
+\boxed{S'=LSL},\qquad \overline L=L^{-1}.
+\]
+Para $\vect x=x_{\parallel}\vect n+\vect x_{\perp}$:
+\[
+\begin{pmatrix}ct'\\x'_{\parallel}\end{pmatrix}
+=\begin{pmatrix}\cosh\varphi&\sinh\varphi\\\sinh\varphi&\cosh\varphi\end{pmatrix}
+\begin{pmatrix}ct\\x_{\parallel}\end{pmatrix},\quad
+\vect x'_{\perp}=\vect x_{\perp}.
+\]
+\small Convención activa con signos positivos; la transformación inversa usa $-\varphi$.
+\fuente{[C16], sección III.A, p. 4, ec. (17); expansión y convención explicitadas.}
+\note{La cantidad del exponente es una rapidez adimensional por una dirección unitaria, no una velocidad con unidades. El cuadrado positivo del vector genera cosenos hiperbólicos y senos hiperbólicos, mientras el cuadrado negativo del bivector generaba funciones trigonométricas. La acción tiene el mismo L en ambos lados, a diferencia de la rotación con rotor y rotor inverso. El signo depende de si se adopta una transformación activa o un cambio pasivo de marco.}
+\end{frame}
+
+% Diapositiva 25
+\begin{frame}{Exponenciales: estructura circular e hiperbólica}
+\begin{columns}[T,onlytextwidth]
+\column{.48\textwidth}
+\begin{block}{Rotación espacial}
+\[
+B^2=-1,\quad R=e^{-B\theta/2}.
+\]
+\[
+R=\cos\tfrac\theta2-B\sin\tfrac\theta2.
+\]
+\[
+\vect v'=R\vect v\widetilde R.
+\]
+\end{block}
+\column{.48\textwidth}
+\begin{block}{Boost de paravectores}
+\[
+\vect n^2=1,\quad L=e^{\vect n\varphi/2}.
+\]
+\[
+L=\cosh\tfrac\varphi2+\vect n\sinh\tfrac\varphi2.
+\]
+\[
+S'=LSL.
+\]
+\end{block}
+\end{columns}
+\vspace{2mm}
+\textbf{Estructura común:} el signo del cuadrado del generador determina la serie. La acción y la conjugación dependen del objeto representado.
+\fuente{[C16], ecs. (9), (17) y secc. IV, pp. 3--4 y 6.}
+\note{La comparación es estructural y no permite usar la misma regla de acción para todos los elementos. Para los boosts de paravectores de la convención elegida aparece L a ambos lados; para rotaciones se usa el rotor y su inverso. La exponencial existe por su serie en el álgebra finito-dimensional. Raíces y logaritmos requieren estudiar dominio y ramas, como indica el artículo al remitir a funciones multivectoriales.}
+\end{frame}
+
+% Diapositiva 26
+\begin{frame}{Electrodinámica en el vacío: formulación de referencia}
+En el vacío, en unidades SI:
+\begin{align*}
+\nabla\cdot\vect E&=\rho/\varepsilon_0,
+&\nabla\cdot\vect B&=0,\\[2mm]
+\nabla\times\vect E&=-\partial_t\vect B,
+&\nabla\times\vect B&=\mu_0\vect J+\frac1{c^2}\partial_t\vect E.
+\end{align*}
+\[
+c^{-2}=\mu_0\varepsilon_0.
+\]
+\begin{block}{Contenido por componentes}
+Dos ecuaciones escalares y dos vectoriales: ocho igualdades por componentes, sujetas a identidades y restricciones.
+\end{block}
+\small $\rho$: densidad de carga; $\vect J$: densidad de corriente; $\vect E,\vect B$: campos.
+\fuente{[C16], sección III.A, p. 4, ec. (18).}
+\note{Se elige el vacío para fijar de manera coherente epsilon cero y mu cero. La forma general en medios requiere relaciones constitutivas adicionales. El conteo de ocho componentes es un conteo de las ecuaciones, no de grados de libertad dinámicos independientes. Las cuatro leyes siguen existiendo al reescribirlas como una igualdad multivectorial.}
+\end{frame}
+
+% Diapositiva 27
+\begin{frame}{Maxwell: una ecuación multigraduada en unidades SI}
+\[
+F=\vect E+Ic\vect B,\quad
+\mathcal D=\frac1c\partial_t+\nabla,\quad
+\mathcal J=\frac\rho{\varepsilon_0}-\mu_0c\vect J.
+\]
+\begin{equation}
+\boxed{\mathcal D F=\mathcal J.}
+\label{eq:maxwell}
+\end{equation}
+\begin{itemize}
+\item $\vect E$ tiene grado uno; $Ic\vect B$, grado dos.
+\item $\vect E$ y $c\vect B$ comparten unidades; $c^{-1}\partial_t$ y $\nabla$ también.
+\item La equivalencia se establece igualando las cuatro componentes homogéneas.
+\end{itemize}
+\small El factor temporal $1/c$ hace explícita la normalización necesaria de la ec. (19) del manuscrito.
+\fuente{[C16], ecs. (18)--(19), p. 4; normalización SI explicitada.}
+\note{Esta forma SI se verifica expandiendo el producto. El PDF mezcla la expresión temporal con constantes c sin especificar completamente la normalización; restaurar uno sobre c evita incompatibilidad dimensional. La igualdad multivectorial no reduce el contenido físico de Maxwell: organiza las mismas ecuaciones. Se usa el vacío y ausencia de monopolos magnéticos; los medios materiales requieren relaciones constitutivas adicionales.}
+\end{frame}
+
+% Diapositiva 28
+\begin{frame}{Equivalencia de Maxwell mediante proyecciones de grado}
+\small
+\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\textwidth}{@{}c X l@{}}
+\toprule
+\textbf{Grado} & \textbf{Parte de $\mathcal D F=\mathcal J$} & \textbf{Ley}\\
+\midrule
+0 & $\nabla\cdot\vect E=\rho/\varepsilon_0$ & Gauss eléctrico\\
+1 & $\frac1c\partial_t\vect E-c\nabla\times\vect B=-\mu_0c\vect J$ & Ampère--Maxwell\\
+2 & $I(c\nabla\times\vect E+\partial_t\vect B)=0$ & Faraday\\
+3 & $Ic\nabla\cdot\vect B=0$ & Gauss magnético\\
+\bottomrule
+\end{tabularx}
+\medskip
+\begin{block}{Equivalencia por componentes}
+Los grados son linealmente independientes. Igualar cada proyección reproduce las cuatro leyes sin pérdida de información.
+\end{block}
+\fuente{Desarrollo de las ecs. (18)--(19) del [C16] con la convención SI adoptada.}
+\note{La parte bivectorial de DF es I multiplicado por la suma de la derivada temporal de B y c por el rotacional de E. La fila conserva ese factor c y, al dividir por c, recupera la ley de Faraday habitual. La parte vectorial procede de la derivada de E sobre c y de I c por I rotacional de B, que produce menos c rotacional de B. El apéndice expande todos los grados.}
+\end{frame}
+
+% Diapositiva 29
+\begin{frame}{Ecuación de Dirac: representación y contenido real}
+En unidades naturales $\hbar=c=1$:
+\[
+\gamma^\mu\partial_\mu\psi=-\mathrm{i}m\psi,
+\qquad \psi\in\mathbb C^4.
+\]
+\[
+\gamma^\mu\gamma^\nu+\gamma^\nu\gamma^\mu
+=2\eta^{\mu\nu}\mathbf1,\qquad
+\eta=\operatorname{diag}(1,-1,-1,-1).
+\]
+\begin{itemize}
+\item Intervienen matrices, espinores y una unidad imaginaria.
+\item Cuatro componentes complejas equivalen a ocho reales.
+\item La identificación con $\Cl_3$ requiere una correspondencia de estados y operadores.
+\end{itemize}
+\fuente{[C16], sección III.A, p. 5, ec. (20).}
+\note{Este bloque ilustra el alcance del lenguaje, sin suponer conocimientos avanzados de teoría cuántica. La ecuación usual i gamma derivada psi igual a m psi se escribe de forma equivalente multiplicando por uno sobre i. La coincidencia de dimensión es necesaria para una correspondencia lineal, pero no demuestra que las acciones de los operadores ni las transformaciones físicas sean equivalentes.}
+\end{frame}
+
+% Diapositiva 30
+\begin{frame}{Dirac en $\Cl_3$: alcance de la correspondencia}
+\[
+M=a+\vect v+I\vect w+Ib,\qquad
+M^\star=a-\vect v+I\vect w-Ib.
+\]
+En la convención del artículo, con $\hbar=c=1$:
+\begin{equation}
+\partial M=-ImM^\star e_3,\qquad \partial=\partial_t+\nabla.
+\label{eq:dirac}
+\end{equation}
+\begin{block}{Condiciones de interpretación}
+\begin{itemize}
+\item $I^2=-1$ aporta una estructura compleja interna.
+\item El involutivo $\star$ y la multiplicación por $e_3$ forman parte de la representación.
+\item La coincidencia de ocho componentes reales no prueba por sí sola la equivalencia dinámica.
+\end{itemize}
+\end{block}
+\fuente{[C16], ec. (21), p. 5, con remisión a su referencia [23].}
+\note{Exponer la ecuación como la representación citada por los autores. Una demostración completa exige construir la aplicación desde el espinor de Dirac, verificar la correspondencia de las matrices gamma y recuperar los observables y las leyes de transformación. No se obtiene una nueva física por sustituir la unidad imaginaria por I; se reorganiza la representación matemática.}
+\end{frame}
+
+\section{Geometría de fuerzas y movimiento}
+% Diapositiva 31
+\begin{frame}{Rectas orientadas y coordenadas de Plücker}
+\begin{columns}[c,onlytextwidth]
+\column{.49\textwidth}
+\begin{tikzpicture}[scale=.8,>=Latex]
+\coordinate(O) at (0,0);\coordinate(P) at (1.3,1.6);
+\fill(O) circle(2pt) node[below]{$O$};
+\draw[gray,dashed](-.2,1.6)--(4.5,1.6);
+\draw[->,very thick,MSUgreen](P)--(4,1.6) node[right]{$\vect v$};
+\draw[->,thick,accent](O)--(P) node[midway,left]{$\vect r$};
+\draw[->,thick,gray](0,0)--(2.7,0) node[below]{$\vect v$};
+\node[font=\small] at (2.8,2.35){línea de acción};
+\end{tikzpicture}
+\column{.47\textwidth}
+\begin{block}{Representación de una línea de acción}
+\[
+V=\vect v+I\vect w
+=\vect v+\vect v\wedge\vect r.
+\]
+\end{block}
+\[
+\vect w=\vect v\times\vect r,\quad
+\vect v\cdot\vect w=0.
+\]
+\end{columns}
+\medskip
+\small Con $\vect v\ne0$, la condición de Plücker es $\vect v\cdot\vect w=0$. La recta no parametrizada identifica además una escala común.
+\fuente{[C16], sección III.B, p. 5, ec. (25); esquema propio.}
+\note{La pareja dirección y momento codifica una línea, no un punto de aplicación único. Cambiar r por r más lambda v no cambia el bivector. Las seis coordenadas de Plücker cumplen una restricción; al identificar pares que difieren por escala común, una recta tiene cuatro grados de libertad. Para una fuerza la magnitud importa y no se elimina esa escala. Las distintas componentes físicas pueden tener unidades distintas.}
+\end{frame}
+
+% Diapositiva 32
+\begin{frame}{Fuerza aplicada y orientación del momento}
+\[
+\vect\tau=\vect r\times\vect f,\qquad
+\vect t=\vect f\times\vect r=-\vect\tau.
+\]
+La convención del artículo se expresa como
+\begin{equation}
+\mathsf F=\vect f+\vect f\wedge\vect r
+=\vect f+I\vect t=\vect f-I\vect\tau.
+\label{eq:force}
+\end{equation}
+\begin{block}{Interpretación mecánica}
+El componente vectorial conserva la fuerza; el bivector codifica su momento respecto del origen. Desplazar $\vect r$ a $\vect r+\lambda\vect f$ deja invariante $\mathsf F$.
+\end{block}
+\small Fuerza y momento mantienen sus unidades respectivas: la agrupación es multigraduada y físicamente tipada.
+\fuente{[C16], secc. III.B, ec. (25), p. 5; convención mecánica explicitada.}
+\note{La expresión del artículo usa el orden f exterior r, que se opone al momento r cruz f empleado habitualmente en mecánica. Declarar el signo es indispensable antes de utilizar la representación en equilibrio o dinámica. La invariancia sobre la línea de acción no equivale a insensibilidad general al punto de aplicación en un cuerpo deformable.}
+\end{frame}
+
+% Diapositiva 33
+\begin{frame}{Producto recíproco y coplanaridad de líneas}
+Para $\mathsf F_k=\vect f_k+I\vect t_k$:
+\[
+\langle\mathsf F_1\mathsf F_2\rangle_3
+=I\bigl(\vect f_1\cdot\vect t_2+\vect f_2\cdot\vect t_1\bigr).
+\]
+Si $\vect t_k=\vect f_k\times\vect r_k$, entonces
+\[
+\vect f_1\cdot\vect t_2+\vect f_2\cdot\vect t_1
+=(\vect f_1\times\vect f_2)\cdot(\vect r_2-\vect r_1).
+\]
+\begin{block}{Criterio de coplanaridad}
+Valor cero: líneas coplanares, incluidas las paralelas. Valor no nulo: líneas alabeadas.
+\end{block}
+\small La anulación del producto recíproco no implica momento resultante nulo; ambas propiedades deben evaluarse por separado.
+\fuente{[C16], sección III.B, p. 5, ec. (26); interpretación geométrica precisada.}
+\note{El artículo asocia la parte trivectorial a la torsión de dos fuerzas. Para evitar una interpretación mecánica excesiva, presentarla como producto recíproco de líneas: mide un triple producto y detecta coplanaridad. Dos fuerzas coplanares pueden ejercer un momento no nulo. El signo cambia al invertir orientaciones o convenciones, por lo que no debe describirse como un torque universal independiente de esas elecciones.}
+\end{frame}
+
+\section{Discusión y conclusiones}
+% Diapositiva 34
+\begin{frame}{Extensión dimensional y costo de representación}
+Como espacio vectorial:
+\[
+\Cl_n=\bigoplus_{k=0}^{n}\Lambda^k(\mathbb R^n),\qquad
+\dim\Cl_n=\sum_{k=0}^{n}\binom nk=2^n.
+\]
+\begin{columns}[T,onlytextwidth]
+\column{.48\textwidth}
+\begin{block}{En tres dimensiones}
+Un plano orientado puede describirse por su normal axial:
+\[
+\vect a\wedge\vect b=I(\vect a\times\vect b).
+\]
+\end{block}
+\column{.48\textwidth}
+\begin{block}{En dimensión arbitraria}
+$\vect a\wedge\vect b$ sigue siendo un bivector, aunque la normal no sea única.
+\[
+\dim\Lambda^2(\mathbb R^4)=6.
+\]
+\end{block}
+\end{columns}
+\medskip
+\small La construcción exterior se conserva en cualquier dimensión; el número de componentes crece como $2^n$.
+\fuente{[C16], sección IV y conclusión, pp. 5--7.}
+\note{El producto cruz usual entre dos vectores no ofrece una representación canónica de todos los planos en dimensión cuatro. El exterior sí generaliza de manera uniforme. El crecimiento exponencial de la dimensión es una advertencia de costo algebraico, no una medida directa del costo de un algoritmo que puede explotar estructuras dispersas o subálgebras.}
+\end{frame}
+
+% Diapositiva 35
+\begin{frame}{Correspondencias y límites de cada formalismo}
+\small
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{@{}l Y Y Y@{}}
+\toprule
+& \textbf{Gibbs} & \textbf{Cuaterniones} & \textbf{Clifford $\Cl_3$}\\
+\midrule
+Producto & Escalar y cruz separados & Asociativo, no conmutativo & Asociativo, graduado\\
+Inversa & Sin división vectorial general & Todo elemento no nulo & Elementos no singulares\\
+Rotaciones & Requiere operadores adicionales & Cuaterniones unitarios & Rotores de $\Cl_3^+$\\
+Geometría & Dirección y normal axial & Álgebra rotacional & Grados $0,1,2,3$\\
+\bottomrule
+\end{tabularx}
+\par\smallskip\small
+\textbf{Conclusión comparativa:} la integración estructural no establece automáticamente superioridad computacional en cualquier aplicación.
+\fuente{Síntesis de [C16], secc. II--V; alcance de invertibilidad precisado.}
+\note{La tabla aplica los criterios definidos al comienzo. En el sistema de Gibbs las rotaciones se representan mediante matrices u otros operadores, lo que es una ampliación rutinaria y eficaz. Los cuaterniones son un álgebra de división, mientras Cl3 contiene divisores de cero. Clifford conserva el contenido de los productos conocidos y distingue grados, pero requiere elegir representaciones y métodos de cálculo apropiados.}
+\end{frame}
+
+% Diapositiva 36
+\begin{frame}{Implicaciones para Mecatrónica II}
+\small
+\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\textwidth}{@{}l Y Y@{}}
+\toprule
+\textbf{Problema} & \textbf{Objeto geométrico} & \textbf{Alcance}\\
+\midrule
+Orientación de un sólido & Rotor y bivector de velocidad angular & Composición y cinemática rotacional.\\
+Fuerzas y momentos & Vector ligado y pareja fuerza--momento & Línea de acción y cambio de origen.\\
+Campos electromagnéticos & Vector más bivector & Separación geométrica de los campos.\\
+Geometría robótica & Extensiones proyectivas o conformales & Poses y entidades que exceden $\Cl_3$ euclídeo.\\
+\bottomrule
+\end{tabularx}
+\fuente{[C16], secc. III.B y secc. V, pp. 5--7; vínculos mecánicos explicitados.}
+\note{Las conexiones se formulan como problemas, objetos y límites. El artículo cita aplicaciones en robótica, visión, óptica y procesamiento de señales, pero no reproduce un estudio de implementación para cada una. En particular, las traslaciones y las poses completas no se atribuyen a los rotores de Cl3: se mencionan modelos ampliados cuando son necesarios.}
+\end{frame}
+
+% Diapositiva 37
+\begin{frame}{Evaluación crítica: tres niveles de afirmación}
+\begin{enumerate}
+\item \textbf{Identidades matemáticas.} Producto graduado, subálgebras, acción de rotores y proyecciones de Maxwell: verificables dentro de las convenciones fijadas.
+\item \textbf{Interpretación histórica.} La controversia como confusión entre vectores y operadores: lectura de los autores que debe contrastarse con la historiografía.
+\item \textbf{Programa metodológico.} Un lenguaje unificado para ingeniería y física: propuesta cuyo desempeño depende de criterios de adopción y de cada problema.
+\end{enumerate}
+\vspace{2mm}
+\begin{block}{Precaución conceptual}
+La representación compleja del plano no viola por sí misma la isotropía; la distinción entre objetos y operadores es el argumento estructural relevante.
+\end{block}
+\fuente{Lectura crítica de [C16], secc. II, IV y V, pp. 1--2 y 5--7.}
+\note{El artículo usa un lenguaje fuerte al describir limitaciones y defectos de sistemas previos. Una evaluación rigurosa distingue el alcance de las identidades de las inferencias sobre conveniencia o naturalidad. La isotropía del plano complejo se preserva bajo rotaciones apropiadas; distinguir un eje real y uno imaginario no demuestra una ruptura física de simetría. Tampoco hay en el artículo un experimento que mida reducción de esfuerzo de aprendizaje.}
+\end{frame}
+
+% Diapositiva 38
+\begin{frame}{Conclusiones}
+\begin{enumerate}
+\item El debate histórico se aclara al distinguir el espacio vectorial del álgebra de sus transformaciones.
+\item El producto geométrico integra información métrica y orientación en un álgebra graduada.
+\item Los formalismos complejo y cuaterniónico se recuperan como subálgebras pares.
+\item La reorganización de campos y fuerzas es rigurosa si se declaran signatura, unidades, involuciones y convenciones de acción.
+\end{enumerate}
+\vspace{3mm}
+\begin{block}{Aporte central}
+La unificación propuesta por Clifford conserva las diferencias entre objetos geométricos y explicita las operaciones que los relacionan.
+\end{block}
+\fuente{Síntesis de [C16], secc. V, pp. 6--7.}
+\note{Cerrar con la respuesta a los criterios iniciales: qué se conserva, qué se integra y qué sigue requiriendo hipótesis. La propuesta de los autores gana fuerza al reconocerse como una estructura que contiene y relaciona formalismos existentes, no como una descalificación de sus aplicaciones válidas. La práctica profesional exige además evaluar costo, estabilidad numérica y adecuación de la implementación.}
+\end{frame}
+
+% Diapositiva 39
+\begin{frame}{Referencias}
+\small
+\textbf{[C16] Fuente principal}\\[1mm]
+J. M. Chappell, A. Iqbal, J. G. Hartnett y D. Abbott.
+\textit{The vector algebra war: a historical perspective}. 2016.\\
+\href{https://arxiv.org/abs/1509.00501v2}{arXiv:1509.00501v2}, 22 de abril de 2016.\\
+\href{https://doi.org/10.1109/ACCESS.2016.2538262}{DOI: 10.1109/ACCESS.2016.2538262}, \textit{IEEE Access}.
+\par\vspace{3mm}
+\textbf{Bibliografía de ampliación citada en el artículo}\\[1mm]
+\begin{itemize}
+\item C. Doran y A. Lasenby. \textit{Geometric Algebra for Physicists}. Cambridge University Press, 2003. [6]
+\item D. Hestenes y G. Sobczyk. \textit{Clifford Algebra to Geometric Calculus}. D. Reidel, 1984. [24]
+\end{itemize}
+\fuente{Las remisiones de [C16] corresponden al manuscrito local WARaLG.pdf.}
+\note{La fuente de contenido es el manuscrito local, identificado como arXiv versión dos. No usar la paginación editorial para las remisiones internas al PDF de ocho páginas. Las obras complementarias se reconocen como bibliografía que cita el artículo, no como fuentes íntegramente revisadas para esta preparación.}
+\end{frame}
+
+% Diapositiva 40
+\begin{frame}{Bibliografía especializada y trazabilidad}
+\small
+\begin{itemize}
+\item J. M. Chappell et al. ``Geometric algebra for electrical and electronic engineers''. \textit{Proceedings of the IEEE}, 102(9), 1340--1363, 2014. [19]
+\item P. Lounesto. \textit{Clifford Algebras and Spinors}. Cambridge University Press, 2001. [23]
+\item L. Dorst, D. Fontijne y S. Mann. \textit{Geometric Algebra for Computer Science}. Morgan Kaufmann, 2009. [25]
+\end{itemize}
+\vspace{3mm}
+\begin{block}{Criterio de elaboración}
+Las notas al pie identifican secciones y ecuaciones del artículo. Las demostraciones intermedias y extensiones mecánicas se distinguen de sus resultados y aplicaciones citadas.
+\end{block}
+\fuente{Referencias [19], [23] y [25] de [C16], p. 7.}
+\note{Los apéndices permiten auditar signos, unidades e hipótesis sin fragmentar el argumento principal. La bibliografía de ampliación se ofrece para profundización y mantiene la numeración del artículo original. El guion conserva el razonamiento por diapositiva y las correcciones conceptuales adoptadas.}
+\end{frame}
+
+\appendix
+\section*{Apéndices técnicos}
+% Diapositiva 41
+\begin{frame}{A1. Representación compleja del plano}
+\begin{columns}[c,onlytextwidth]
+\column{.56\textwidth}
+\[
+z=x+\mathrm{i}y,\qquad \mathrm{i}^{2}=-1.
+\]
+\[
+z_1+z_2=(x_1+x_2)+\mathrm{i}(y_1+y_2).
+\]
+\begin{block}{Rotación}
+\[
+z'=e^{\mathrm{i}\theta}z,
+\qquad e^{\mathrm{i}\theta}=\cos\theta+\mathrm{i}\sin\theta.
+\]
+\end{block}
+\column{.40\textwidth}
+\centering
+\begin{tikzpicture}[scale=.82,>=Latex]
+\draw[->,gray](-.25,0)--(3.5,0) node[right]{$\Re$};
+\draw[->,gray](0,-.25)--(0,3.2) node[above]{$\Im$};
+\draw[->,very thick,MSUgreen](0,0)--(2.8,.9) node[right]{$z$};
+\draw[->,very thick,accent](0,0)--(1.6,2.47) node[above]{$z'$};
+\draw[->,accent](1.35,.43) arc[start angle=18,end angle=57,radius=1.42];
+\node at (1.55,1.13){$\theta$};
+\end{tikzpicture}
+\end{columns}
+\fuente{[C16], sección II, pp. 1--2, ec. (1).}
+\note{Un mismo tipo de número puede representar una posición plana o una transformación por multiplicación. Al sumar se recupera la regla del paralelogramo. La crítica del artículo al uso de ejes real e imaginario debe entenderse como una motivación para distinguir objetos y operadores; representar el plano mediante complejos no rompe por sí mismo su isotropía física. El diagrama utiliza una rotación antihoraria.}
+\end{frame}
+
+% Diapositiva 42
+\begin{frame}{A2. Norma e inversa cuaterniónica}
+\[
+q=q_0+q_1\qi+q_2\qj+q_3\qk\in\mathbb H.
+\]
+\begin{columns}[T,onlytextwidth]
+\column{.47\textwidth}
+\begin{block}{Reglas de Hamilton}
+\[
+\qi^2=\qj^2=\qk^2=\qi\qj\qk=-1.
+\]
+\[
+\qi\qj=\qk,\qquad \qj\qi=-\qk.
+\]
+\end{block}
+\column{.49\textwidth}
+\begin{itemize}
+\item Producto asociativo y no conmutativo.
+\item Cuatro dimensiones como espacio real.
+\item Todo cuaternión no nulo tiene inversa.
+\end{itemize}
+\end{columns}
+\medskip
+\[
+q^{-1}=\frac{q^{\dagger}}{q q^{\dagger}},\qquad
+q^{\dagger}=q_0-q_1\qi-q_2\qj-q_3\qk.
+\]
+\fuente{[C16], sección II, p. 2, ec. (2); inversa desarrollada para la presentación.}
+\note{Distinguir la dimensión de la representación de la dimensión del espacio físico. La cuarta componente no obliga a interpretar el escalar como tiempo. La daga se usa aquí exclusivamente para la conjugación cuaterniónica; después la reversión de Clifford tendrá una tilde. La positividad de q por su conjugado permite dividir por todo cuaternión no nulo.}
+\end{frame}
+
+% Diapositiva 43
+\begin{frame}{A3. Rotación cuaterniónica y acción bilateral}
+Para $\|\vect n\|=1$, el cuaternión puro $\widehat{\vect n}$ satisface $\widehat{\vect n}^{\,2}=-1$.
+\[
+q=e^{\widehat{\vect n}\theta/2}
+=\cos\frac\theta2+\widehat{\vect n}\sin\frac\theta2,
+\qquad q^{-1}=q^\dagger.
+\]
+\begin{block}{Acción sobre una dirección}
+\[
+\widehat{\vect v}'=q\widehat{\vect v}q^{-1}.
+\]
+\end{block}
+\begin{itemize}
+\item $q$ y $-q$ producen la misma rotación.
+\item La composición conserva el orden de los factores.
+\item La ec. (3) del artículo usa el vector cuaterniónico $\vect a=\theta\widehat{\vect n}$ en el exponente.
+\end{itemize}
+\fuente{[C16], secc. II, ec. (3), p. 2; parametrización angular explicitada.}
+\note{El manuscrito escribe q prima igual a exponencial de a sobre dos por q por exponencial de menos a sobre dos. Aquí se reserva q para el operador unitario y se escribe v con sombrero para el cuaternión puro transformado. El cambio es de notación, no de acción. El módulo del generador a incorpora el ángulo; la dirección unitaria por sí sola no determina la amplitud del giro.}
+\end{frame}
+
+% Diapositiva 44
+\begin{frame}{A4. Cuadrado vectorial y cancelación de términos cruzados}
+Para $\vect v=v_1e_1+v_2e_2+v_3e_3$:
+\begin{align*}
+\vect v^{\,2}
+&=\sum_i v_i^2 e_i^2+\sum_{i<j}v_i v_j(e_i e_j+e_j e_i)\\[1mm]
+&=v_1^2+v_2^2+v_3^2=\|\vect v\|^2.
+\end{align*}
+\begin{block}{La diferencia con Hamilton}
+El vector euclídeo tiene cuadrado positivo; los generadores de rotación aparecerán como bivectores de cuadrado negativo.
+\end{block}
+\fuente{[C16], sección III, p. 3, ec. (5) y texto posterior.}
+\note{Mostrar cómo se cancelan los términos cruzados sin declarar que toda multiplicación conmute. La norma se obtiene como escalar. La diferencia de signos no convierte a un formalismo en falso: indica que los generadores cuaterniónicos serán identificados con bivectores, que tienen otro significado geométrico.}
+\end{frame}
+
+% Diapositiva 45
+\begin{frame}{A5. Comprobación por componentes del producto geométrico}
+Sean $\vect a=e_1+2e_2$ y $\vect b=3e_1+e_2$.
+\begin{align*}
+\vect a\vect b
+&=3e_1^2+e_1e_2+6e_2e_1+2e_2^2\\
+&=5-5e_{12}.
+\end{align*}
+\begin{columns}[T,onlytextwidth]
+\column{.48\textwidth}
+\begin{block}{Parte escalar}
+\[
+\vect a\cdot\vect b=5.
+\]
+\[
+\cos\theta=\frac{5}{\sqrt5\sqrt{10}}=\frac1{\sqrt2}.
+\]
+\end{block}
+\column{.48\textwidth}
+\begin{block}{Parte bivectorial}
+\[
+\vect a\wedge\vect b=-5e_{12}.
+\]
+Área $=5$; orientación opuesta a $e_{12}$.
+\end{block}
+\end{columns}
+\fuente{Desarrollo algebraico a partir de las ecs. (6)--(7) del [C16].}
+\note{Hacer la multiplicación sin saltarse el cambio e2e1 igual a menos e1e2. El ángulo no orientado entre ambos vectores es 45 grados; el giro de a hacia b en el plano e12 es horario. El resultado ba es 5 más 5e12, de modo que intercambiar el orden conserva la proyección e invierte la orientación del área.}
+\end{frame}
+
+% Diapositiva 46
+\begin{frame}{A6. Recuperación de un factor mediante inversa derecha}
+En $\Cl_{3,0}$, si $\vect v\ne\vect 0$:
+\[
+\boxed{\vect v^{-1}=\frac{\vect v}{\vect v^2}
+=\frac{\vect v}{\|\vect v\|^2}}
+\]
+\[
+\vect v\vect v^{-1}=\vect v^{-1}\vect v=1.
+\]
+\begin{exampleblock}{Recuperar un factor}
+Si $\vect a\vect b=5-5e_{12}$ y $\vect b=3e_1+e_2$:
+\[
+\vect a=(5-5e_{12})\frac{3e_1+e_2}{10}=e_1+2e_2.
+\]
+\end{exampleblock}
+\small El orden importa: una división por la derecha y una por la izquierda son operaciones distintas.
+\fuente{[C16], sección III, p. 3, ec. (8); comprobación propia.}
+\note{La inversa existe para todo vector no nulo en esta signatura positiva. Para resolver ab igual a C se multiplica por b inverso a la derecha. No se puede cambiar el orden por comodidad. En álgebras con signatura indefinida puede haber vectores no nulos con cuadrado cero, para los que esta fórmula no da una inversa.}
+\end{frame}
+
+% Diapositiva 47
+\begin{frame}{A7. Denominador central de la inversa multivectorial}
+Escribamos $M=z+U$, con $z=a+Ib$ y $U=\vect v+I\vect w$.
+\begin{align*}
+M\overline M&=(z+U)(z-U)=z^2-U^2\\
+&=\underbrace{a^2-b^2-\|\vect v\|^2+\|\vect w\|^2}_{\alpha}
++2I\underbrace{(ab-\vect v\cdot\vect w)}_{\beta/2}.
+\end{align*}
+\[
+D=\alpha+I\beta,\qquad
+D^{-1}=\frac{\alpha-I\beta}{\alpha^2+\beta^2}
+\quad\text{si }\alpha^2+\beta^2>0.
+\]
+\[
+M^{-1}=\overline M\,\frac{\alpha-I\beta}{\alpha^2+\beta^2}.
+\]
+\fuente{Desarrollo algebraico de la fórmula posterior a la ec. (12) del [C16].}
+\note{El elemento z es central, por lo que los términos cruzados zU y Uz se cancelan. U al cuadrado es norma de v al cuadrado menos norma de w al cuadrado más 2I por v punto w. Para coeficientes reales, alpha al cuadrado más beta al cuadrado solo se anula cuando ambos son cero. El caso M igual a 1 más e1 da precisamente cero.}
+\end{frame}
+
+% Diapositiva 48
+\begin{frame}{A8. Convención cuaterniónica de los bivectores}
+\[
+\Cl_3^{+}=\operatorname{span}_{\mathbb R}\{1,e_{23},e_{31},e_{12}\}
+\simeq\mathbb H.
+\]
+Una elección coherente de signos es
+\[
+\qi\leftrightarrow-e_{23},\qquad
+\qj\leftrightarrow-e_{31},\qquad
+\qk\leftrightarrow-e_{12}.
+\]
+\[
+(-e_{23})(-e_{31})=-e_{12},\qquad (-e_{ij})^2=-1.
+\]
+\begin{block}{Reconciliación}
+Los vectores cartesianos y los cuaterniones coexisten en el mismo álgebra, con grados y funciones distintos.
+\end{block}
+\fuente{[C16], sección III, p. 4; tabla I, p. 6. Convención de signos equivalente.}
+\note{El artículo utiliza otra base equivalente para la correspondencia. Aquí se escogen tres bivectores negativos cíclicos para cumplir i por j igual a k con una regla uniforme. Subrayar que la subálgebra par sí es cerrada bajo el producto y es isomorfa a los cuaterniones; el subespacio vectorial de grado uno no es una subálgebra, porque su producto tiene grados cero y dos.}
+\end{frame}
+
+% Diapositiva 49
+\begin{frame}{A9. Comprobación de un giro de $90^\circ$}
+Para un giro positivo alrededor de $e_3$:
+\[
+B=e_{12},\qquad R=\frac{1-e_{12}}{\sqrt2},\quad
+\widetilde R=\frac{1+e_{12}}{\sqrt2}.
+\]
+\begin{align*}
+e'_1&=Re_1\widetilde R\\
+&=\tfrac12(e_1+e_2)(1+e_{12})\\
+&=e_2.
+\end{align*}
+\begin{block}{Comprobación geométrica}
+$e_1\mapsto e_2$, $e_2\mapsto-e_1$ y $e_3\mapsto e_3$.
+\end{block}
+\fuente{Ejemplo propio basado en la ec. (9) del [C16].}
+\note{Calcular e12 por e1 igual a menos e2, e1 por e12 igual a e2 y e2 por e12 igual a menos e1. Comprobar el signo del giro con la regla de la mano derecha. Este ejemplo fija la convención para que las fórmulas con signos opuestos de otros libros no generen confusión. El anexo deriva la fórmula de Rodrigues a partir del mismo rotor.}
+\end{frame}
+
+% Diapositiva 50
+\begin{frame}{A10. No conmutatividad: dos giros sobre ejes fijos}
+Si primero actúa $R_1$ y luego $R_2$:
+\[
+\vect v''=(R_2R_1)\vect v\,\widetilde{(R_2R_1)}.
+\]
+\begin{columns}[T,onlytextwidth]
+\column{.48\textwidth}
+\begin{block}{Primero $z$, después $x$}
+Giros positivos de $90^\circ$:
+\[
+e_1\xrightarrow{R_z}e_2\xrightarrow{R_x}e_3.
+\]
+\end{block}
+\column{.48\textwidth}
+\begin{block}{Primero $x$, después $z$}
+Los mismos giros en otro orden:
+\[
+e_1\xrightarrow{R_x}e_1\xrightarrow{R_z}e_2.
+\]
+\end{block}
+\end{columns}
+\medskip
+\textbf{Conclusión:} la no conmutatividad expresa una propiedad de la geometría de las rotaciones.
+\fuente{[C16], secciones II--III, pp. 2--4; ejemplo didáctico propio.}
+\note{Aclarar que los ejes son fijos en el mismo marco y se usan giros activos. El orden se lee de derecha a izquierda en el producto de rotores. Las matrices de rotación tampoco conmutan en general; la propiedad no es una desventaja exclusiva de los cuaterniones.}
+\end{frame}
+
+% Diapositiva 51
+\begin{frame}{A11. Derivación de la fórmula de Rodrigues}
+Con $R=\cos(\theta/2)-I\vect n\sin(\theta/2)$, descomponer
+\[
+\vect v=\vect v_{\parallel}+\vect v_{\perp},\qquad
+\vect v_{\parallel}=(\vect n\cdot\vect v)\vect n.
+\]
+La parte paralela se conserva y la perpendicular gira:
+\[
+R\vect v\widetilde R
+=\vect v_{\parallel}+\vect v_{\perp}\cos\theta
++(\vect n\times\vect v)\sin\theta.
+\]
+\begin{block}{Fórmula de Rodrigues}
+\[
+\vect v'=\vect v\cos\theta+(\vect n\times\vect v)\sin\theta
++\vect n(\vect n\cdot\vect v)(1-\cos\theta).
+\]
+\end{block}
+\fuente{Derivación complementaria de la rotación de la ec. (9) del [C16].}
+\note{La componente paralela conmuta con el bivector I n y la perpendicular anticonmuta con él. Al expandir los factores se obtiene el giro plano de la componente perpendicular. La fórmula familiar de Rodrigues confirma que el rotor produce la rotación euclídea habitual; no introduce una nueva ley física.}
+\end{frame}
+
+% Diapositiva 52
+\begin{frame}{A12. Invariancia del intervalo y boost numérico}
+\small
+\setlength{\abovedisplayskip}{5pt}
+\setlength{\belowdisplayskip}{5pt}
+Para $S'=LSL$ y $\overline L=L^{-1}$:
+\begin{align*}
+S'\overline{S'}
+&=LSL\,\overline L\,\overline S\,\overline L\\
+&=L(S\overline S)\overline L\\
+&=S\overline S.
+\end{align*}
+\begin{block}{Ejemplo: $\beta=0.6$}
+\[
+\cosh\varphi=\gamma=1.25,\qquad
+\sinh\varphi=\gamma\beta=0.75.
+\]
+Para $(ct,x_{\parallel})=(1,0)$: $(ct',x'_{\parallel})=(1.25,0.75)$.
+\[
+1.25^2-0.75^2=1.
+\]
+\end{block}
+\fuente{Desarrollo de las ecs. (16)--(17) del [C16]; comprobación propia.}
+\note{El intervalo es escalar y por eso puede conmutar con L. La conjugación invierte el orden, aunque como los factores extremos son iguales el aspecto del resultado puede disimular esa propiedad. El ejemplo usa unidades de longitud comunes para ct y x y el signo activo escogido antes.}
+\end{frame}
+
+% Diapositiva 53
+\begin{frame}{A13. Expansión homogénea de la ecuación de Maxwell}
+\small
+\begin{align*}
+\mathcal D F
+&=\frac1c\partial_t\vect E+I\partial_t\vect B
++\nabla\vect E+Ic\nabla\vect B\\
+&=\underbrace{\nabla\cdot\vect E}_{\text{grado 0}}
++\underbrace{\left(\frac1c\partial_t\vect E-c\nabla\times\vect B\right)}_{\text{grado 1}}\\
+&\quad+\underbrace{I\left(\partial_t\vect B+c\nabla\times\vect E\right)}_{\text{grado 2}}
++\underbrace{Ic\nabla\cdot\vect B}_{\text{grado 3}}.
+\end{align*}
+\[
+\mathcal J=\underbrace{\rho/\varepsilon_0}_{\text{grado 0}}
+-\underbrace{\mu_0c\vect J}_{\text{grado 1}}.
+\]
+\small Los grados 2 y 3 de la fuente son cero. Se han supuesto ausencia de cargas magnéticas y relaciones del vacío.
+\fuente{Desarrollo de las ecs. (18)--(19), con factores SI explicitados.}
+\note{El signo menos de la parte vectorial se debe a I por I igual a menos uno. Esta expansión es la comprobación central de equivalencia del bloque electromagnético. El teorema no requiere tratar al vector axial B como si fuera un vector polar: su representación física en F es el bivector I c B.}
+\end{frame}
+
+% Diapositiva 54
+\begin{frame}{A14. Reconstrucción de la línea de acción}
+Si $\vect w=\vect v\times\vect r$, entonces
+\[
+\vect v\cdot\vect w=0,\qquad
+\vect r_{\perp}=\frac{\vect w\times\vect v}{\|\vect v\|^2}.
+\]
+Todos los puntos de la recta se escriben como
+\[
+\vect r=\vect r_{\perp}+\lambda\vect v.
+\]
+\begin{block}{Condición de paso por el origen}
+Si $\vect w=0$ y $\vect v\ne0$, la recta de acción contiene al origen.
+\end{block}
+\small Con la convención mecánica $\vect m=\vect r\times\vect v$ cambia el signo:
+$\vect r_{\perp}=\vect v\times\vect m/\|\vect v\|^2$.
+\fuente{Desarrollo de la ec. (25) del [C16], respetando su orden de producto.}
+\note{Aplicar la identidad del producto triple: (v cruz r) cruz v es norma de v al cuadrado por r menos v por r punto v. Se obtiene la componente de r perpendicular a v, que es el punto de la línea más cercano al origen. La invariancia bajo traslación sobre la propia recta muestra por qué no se recupera un punto único de aplicación.}
+\end{frame}
+
+% Diapositiva 55
+\begin{frame}{A15. Fuerza excéntrica: signo y unidades}
+\[
+\vect r=0.20e_1\ \mathrm m,\qquad
+\vect f=10e_2\ \mathrm N.
+\]
+\begin{align*}
+\vect\tau&=\vect r\times\vect f=2e_3\ \mathrm{N\,m},\\
+\vect f\wedge\vect r&=-2e_{12}\ \mathrm{N\,m}.
+\end{align*}
+\begin{block}{Componentes del vector ligado}
+\[
+\mathsf F=(10e_2)_{\mathrm N}+(-2e_{12})_{\mathrm{N\,m}}.
+\]
+\end{block}
+Para $\vect r'=0.20e_1+\lambda e_2$ se obtiene el mismo momento.
+\small El desplazamiento a lo largo de la línea de acción no altera la representación.
+\fuente{Ejemplo propio basado en la sección III.B del [C16].}
+\note{Multiplicar primero las magnitudes y después verificar la orientación: e1 cruz e2 es e3, mientras e2 exterior e1 es menos e12. La invariancia al deslizar la fuerza sobre su propia recta expresa el principio de transmisibilidad para la estática de un sólido rígido. No significa que cualquier punto de aplicación sea equivalente en un cuerpo deformable.}
+\end{frame}
+
+% Diapositiva 56
+\begin{frame}{A16. Coplanaridad y par puro: un contraejemplo}
+Considérense fuerzas paralelas opuestas:
+\[
+\vect f_1=Fe_2,\quad \vect r_1=de_1,\qquad
+\vect f_2=-Fe_2,\quad \vect r_2=-de_1.
+\]
+\[
+\vect f_1+\vect f_2=0,\qquad
+\vect\tau_{\mathrm{total}}=2dF e_3\ne0.
+\]
+\begin{block}{Producto recíproco}
+\[
+(\vect f_1\times\vect f_2)\cdot(\vect r_2-\vect r_1)=0.
+\]
+Las líneas son coplanares, pero las fuerzas forman un par.
+\end{block}
+\fuente{Contraejemplo didáctico para delimitar la interpretación de la ec. (26).}
+\note{Este ejemplo evita interpretar literalmente la expresión del artículo sobre ausencia de torsión cuando el trivector se anula. Un par de fuerzas tiene fuerza resultante cero y momento no nulo, aun cuando sus líneas sean coplanares. El producto recíproco y el momento resultante responden preguntas distintas.}
+\end{frame}
+
+% Diapositiva 57
+\begin{frame}{A17. Comprobaciones estructurales}
+\small
+\begin{enumerate}
+\item Para $\vect a\vect b=3+4e_{12}$:
+\[
+\vect a\cdot\vect b=3,\quad \|\vect a\wedge\vect b\|=4,
+\quad\theta=\arccos(3/5).
+\]
+\item Para $G_i=-Ie_i/2$: $[G_1,G_2]=G_3$ y permutaciones cíclicas.
+\item En el sistema de fuerzas: verificar por separado
+\[
+\sum_k\vect f_k=0,\qquad\sum_k\vect r_k\times\vect f_k=0.
+\]
+\item Un vector no nulo de $\Cl_{3,0}$ es invertible; un multivector no nulo puede ser singular.
+\end{enumerate}
+\fuente{Comprobaciones desarrolladas a partir de las identidades de [C16].}
+\note{La norma del producto de dos vectores permite reconstruir el producto de las magnitudes de sus factores: tres al cuadrado más cuatro al cuadrado es veinticinco. El conmutador fija los signos de la ecuación cinemática del rotor. Las condiciones de equilibrio de fuerza y momento son independientes de la coplanaridad de líneas. Estos resultados pueden contrastarse con el script de verificación algebraica incluido.}
+\end{frame}
+
+% Diapositiva 58
+\begin{frame}{A18. Generadores bivectoriales y álgebra de Lie}
+Para $G_i=-Ie_i/2$ y $[A,B]=AB-BA$:
+\[
+[G_i,G_j]=\varepsilon_{ijk}G_k.
+\]
+Si $\vect v(t)=R(t)\vect v_0\widetilde{R(t)}$ y $\Omega=I\vect\omega$:
+\[
+\dot R=-\tfrac12\Omega R,\qquad R\widetilde R=1.
+\]
+\begin{equation}
+\dot{\vect v}=\tfrac12(\vect v\Omega-\Omega\vect v)
+=\vect\omega\times\vect v.
+\label{eq:kinematics}
+\end{equation}
+\small $\vect\omega$ se expresa en el marco espacial; el orden cambia con la convención corporal.
+\fuente{Extensión analítica del esquema de rotación de [C16], ec. (9).}
+\note{Esta extensión hace explícita la relación del artículo con cinemática de cuerpos rígidos. G_i igual a menos I e_i sobre dos satisface el álgebra de so(3), comprobable con productos de base. Derivar v=Rv0R reverso usando la ecuación de R y su reverso da un conmutador, que es la velocidad angular cruz v. Se especifica el marco porque la ecuación del rotor es distinta si omega se expresa en coordenadas corporales.}
+\end{frame}
+
+% Diapositiva 59
+\begin{frame}{A19. Cambio de origen y rotación de una fuerza-momento}
+Si $O'=O+\vect d$, el punto de aplicación se representa por $\vect r'=\vect r-\vect d$:
+\[
+\vect f'=\vect f,\qquad
+\vect\tau'=\vect\tau-\vect d\times\vect f.
+\]
+\begin{block}{Acción sobre la pareja fuerza--momento}
+\[
+\begin{pmatrix}\vect f'\\\vect\tau'\end{pmatrix}
+=\begin{pmatrix}\mathbf1&0\\-[\vect d]_\times&\mathbf1\end{pmatrix}
+\begin{pmatrix}\vect f\\\vect\tau\end{pmatrix},
+\quad [\vect d]_\times\vect f=\vect d\times\vect f.
+\]
+\end{block}
+Para una rotación activa $Q\in SO(3)$ con origen fijo:
+\[
+\vect f'=Q\vect f,\qquad\vect\tau'=Q\vect\tau.
+\]
+\fuente{Extensión mecánica de la representación de líneas de [C16], secc. III.B.}
+\note{La matriz de cambio de origen resulta directamente de sustituir r prima por r menos d en el producto cruz. Los bloques no son una suma de cantidades de la misma unidad: el bloque d cruz convierte fuerza en momento. Se distingue este cambio pasivo de origen de una rotación activa del sistema físico. Para transformaciones rígidas completas puede formularse la acción sobre fuerzas y momentos con estructuras adicionales; no se presenta aquí como una acción de rotores euclídeos sobre traslaciones.}
+\end{frame}
+
+% Diapositiva 60
+\begin{frame}{A20. Restricción de Plücker y sistemas de fuerzas}
+Para una fuerza única no nula:
+\[
+\vect\tau=\vect r\times\vect f
+\quad\Longrightarrow\quad \vect f\cdot\vect\tau=0.
+\]
+\begin{block}{Sistema general de fuerzas}
+\[
+\vect f_{\Sigma}=\sum_k\vect f_k,\qquad
+\vect\tau_{\Sigma}=\sum_k\vect r_k\times\vect f_k.
+\]
+En general $\vect f_{\Sigma}\cdot\vect\tau_{\Sigma}\ne0$: la pareja resultante puede requerir una fuerza y un par, no una única línea de acción.
+\end{block}
+\small Si $\vect f_{\Sigma}=0$ y $\vect\tau_{\Sigma}\ne0$, el sistema es un par puro.
+\fuente{Consecuencia mecánica de [C16], ecs. (25)--(26); desarrollo analítico propio.}
+\note{La restricción de Plücker caracteriza una línea y no una fuerza-momento arbitraria. Sumar dos representaciones de fuerzas produce una pareja de fuerza y momento, pero no garantiza que pueda reducirse a una fuerza aplicada sobre una única recta. Si la fuerza resultante no es cero, el momento paralelo a ella no se elimina cambiando el origen. Esta distinción es central para no confundir líneas de acción con tornillos o sistemas generales de fuerzas.}
+\end{frame}
+
+% Diapositiva 61
+\begin{frame}{A21. Funciones de vectores y multivectores}
+Sea $\vect v=r\vect n$, con $\vect n^2=1$ y $r=\|\vect v\|$.
+\[
+e^{\vect v}=\cosh r+\vect n\sinh r,\qquad
+\sin\vect v=\vect n\sin r,\qquad \cos\vect v=\cos r.
+\]
+\[
+2^{\vect v}=e^{(\ln2)\vect v}
+=\cosh(r\ln2)+\vect n\sinh(r\ln2).
+\]
+\begin{block}{Dominio y ramas}
+La exponencial se define por serie de potencias. Los logaritmos y las raíces exigen precisar el dominio y la rama; no se presupone que todo multivector admita cualquier función inversa real.
+\end{block}
+\fuente{[C16], secc. IV, p. 6, referencia [26]; fórmulas desarrolladas por series.}
+\note{El artículo menciona explícitamente seno, logaritmo, raíces y potencias como dos elevado a un vector. Para un vector euclídeo las potencias pares son escalares y las impares son proporcionales al vector, de donde surgen las fórmulas. La expresión con n se entiende para r positivo; en el vector cero los valores se obtienen directamente de las series. No se extrapola la existencia global de logaritmos o raíces a elementos singulares.}
+\end{frame}
+
+% Diapositiva 62
+\begin{frame}{A22. Ámbitos de aplicación citados por el artículo}
+\small
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{\textwidth}{@{}l Y l@{}}
+\toprule
+\textbf{Ámbito} & \textbf{Aplicaciones mencionadas} & \textbf{Refs. de [C16]}\\
+\midrule
+Campos y ondas & Electromagnetismo, polarización y óptica geométrica. & [19], [29], [30]\\
+Señales & Transformadas de Fourier y espectroscopia de terahercios. & [14], [31]\\
+Geometría computacional & Navegación, robótica, gráficos y visión. & [25], [32]--[35]\\
+Física fundamental & Mecánica y computación cuánticas; relatividad. & [36]--[40]\\
+\bottomrule
+\end{tabularx}
+\medskip
+\begin{block}{Alcance de esta evidencia}
+La conclusión del artículo remite a estas aplicaciones mediante bibliografía. No presenta un experimento o una comparación de rendimiento para cada ámbito.
+\end{block}
+\fuente{[C16], secc. V y referencias, p. 7.}
+\note{Esta tabla recoge los dominios enumerados en la conclusión. Diferenciar una aplicación citada de un resultado desarrollado y demostrado en este manuscrito. Algunos ejemplos utilizan álgebras de mayor dimensión, signaturas o modelos distintos de Cl3; el artículo los presenta como parte de un marco más amplio y no como realizaciones idénticas del álgebra euclídea básica.}
+\end{frame}
+
+\end{document}
